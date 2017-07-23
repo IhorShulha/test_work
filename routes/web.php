@@ -11,8 +11,9 @@
 |
 */
 
-Route::get('/', 'PostsController@index');
-Route::get('/create', 'PostsController@create');
+//Route::get('/', 'PostsController@index');
+//Route::get('/create', 'PostsController@create');
+Route::resource('/', 'PostsController');
 
 Auth::routes();
 

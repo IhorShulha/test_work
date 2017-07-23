@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostsCreateRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 
 class PostsController extends Controller
@@ -37,9 +39,13 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostsCreateRequest $request)
     {
         //
+        $input = $request->all();
+        $user = Auth::user();
+
+        //if ($file = $request->file())
     }
 
     /**
@@ -62,7 +68,7 @@ class PostsController extends Controller
     public function edit($id)
     {
         //
-        return view('edit.index');
+        return view('posts.edit');
     }
 
     /**

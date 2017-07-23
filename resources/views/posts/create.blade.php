@@ -4,7 +4,8 @@
 
     <h1 style="text-align: center">Create Article</h1>
 
-    {!! Form::open(['method' => 'POST', 'action' => 'PostsController@create']) !!}
+    <div class="row">
+    {!! Form::open(['method' => 'POST', 'action' => 'PostsController@store']) !!}
 
     <div class="form-group">
         {!! Form::label('title', 'Title:') !!}
@@ -21,4 +22,10 @@
     </div>
 
     {!! Form::close() !!}
+    </div>
+
+    <div class="row">
+        @include('error.errors')
+    </div>
+
 @stop
