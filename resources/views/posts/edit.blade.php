@@ -2,10 +2,6 @@
 
 @section('content')
 
-    @extends('layouts.app')
-
-@section('content')
-
     <h1 style="text-align: center">View Posts</h1>
 
     <div class="col-sm-12">

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 style="text-align: center">Posts</h1>
+    <h1 style="text-align: center">List Posts</h1>
 
     <div class="col-sm-12">
     @if($posts)
