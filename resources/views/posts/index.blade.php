@@ -24,16 +24,27 @@
                     <td>{{str_limit($post->decription, 50)}}</td>
 
                     <td>
+                        @if (Auth::user())
                         <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
 
-                        {{ Form::open(['route' => ['delete.route', $post->id], 'method' => 'delete']) }}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-danger'])!!}
-                        {{ Form::close() }}
+
+                            {{--@if(Auth::loginUsingId())--}}
+                            {{ Form::open(['route' => ['delete.route', $post->id], 'method' => 'delete']) }}
+                            {!! Form::submit('Delete', ['class' => 'btn btn-danger'])!!}
+                            {{ Form::close() }}
+                            {{--@endif--}}
+
+                        @endif
                     </td>
                 </tr>
                 @endforeach
             @endif
-            <a href="{{URL::to('/create/')}}" class="btn btn-danger">Create Ad</a>
+
+            @if (Auth::user())
+                <a href="{{URL::to('/create/')}}" class="btn btn-danger">Create Ad</a>
+            @endif
+
+
         </tbody>
     </table>
             {{$posts->links()}}

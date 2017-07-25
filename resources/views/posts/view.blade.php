@@ -17,7 +17,9 @@
         Date created: {{$post->created_at}}</p>
 
     <p>{!! $post->decription !!}</p>
+    @if (Auth::user())
     <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
+    @endif
 
 
 @stop
