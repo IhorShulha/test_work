@@ -14,6 +14,7 @@
 //Route::get('/', 'PostsController@index');
 //Route::get('/create', 'PostsController@create');
 Route::resource('/', 'PostsController');
+Route::get('/post/{id}', 'PostsController@show');
 
 Auth::routes();
 

@@ -6,6 +6,7 @@ use App\Http\Requests\PostsCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
+use App\User;
 
 class PostsController extends Controller
 {
@@ -17,7 +18,7 @@ class PostsController extends Controller
     public function index()
     {
         //
-        $posts = Post::all();
+        $posts = Post::orderBy('id', 'desc')->paginate(5);
 
         return view('posts.index', compact('posts'));
     }
@@ -30,6 +31,7 @@ class PostsController extends Controller
     public function create()
     {
         //
+
         return view('posts.create');
     }
 
@@ -42,10 +44,12 @@ class PostsController extends Controller
     public function store(PostsCreateRequest $request)
     {
         //
-        $input = $request->all();
-        $user = Auth::user();
+        //dd($request->all());
 
-        //if ($file = $request->file())
+
+        Post::create($request->all());
+
+        return redirect('/');
     }
 
     /**
@@ -57,6 +61,9 @@ class PostsController extends Controller
     public function show($id)
     {
         //
+        $posts = Post::find($id);
+
+        return view('posts.view', ['post' => Post::findOrFail($id)]);
     }
 
     /**
@@ -68,7 +75,9 @@ class PostsController extends Controller
     public function edit($id)
     {
         //
-        return view('posts.edit');
+        $post = Post::findOrFail($id);
+
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -81,6 +90,14 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $input = $request->all();
+
+        Auth::user()->posts()->whereId($id)->first()->update($input);
+
+        Post::create($input);
+
+        return redirect('/');
+
     }
 
     /**
