@@ -17,7 +17,6 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
         $posts = Post::orderBy('id', 'desc')->paginate(5);
 
         return view('posts.index', compact('posts'));
@@ -30,8 +29,6 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
-
         return view('posts.create');
     }
 
@@ -43,10 +40,6 @@ class PostsController extends Controller
      */
     public function store(PostsCreateRequest $request)
     {
-        //
-        //dd($request->all());
-
-
         Post::create($request->all());
 
         return redirect('/');
@@ -60,10 +53,9 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
-        $posts = Post::findOrFail($id);
+        $post = Post::findOrFail($id);
 
-        return view('posts.view', compact('posts'));
+        return view('posts.view', compact('post'));
     }
 
     /**
@@ -74,7 +66,6 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
         $post = Post::findOrFail($id);
 
         return view('posts.edit', compact('post'));
@@ -87,17 +78,14 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostsCreateRequest $request, $id)
     {
-        //
-        $input = $request->all();
 
-        Auth::user()->posts()->whereId($id)->first()->update($input);
+        $post = Post::findOrFail($id);
+        $input = PostsCreateRequest::all();
+        $post->update($input);
 
-        Post::create($input);
-
-        return redirect('/');
-
+        return redirect('/post/'.$id);
     }
 
     /**
@@ -108,6 +96,9 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect('/');
     }
 }

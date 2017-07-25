@@ -16,21 +16,24 @@
         </tr>
         </thead>
         <tbody>
-
-
             @foreach($posts as $post)
                 <tr>
                     <td>{{$post->user_id}}</td>
                     <td>{{$post->created_at ? $post->created_at->diffForHumans() : 'No date'}}</td>
-                    <td>{{$post->title}}</td>
+                    <td><a href="{{URL::to('/post/'.$post->id)}}">{{$post->title}}</a></td>
                     <td>{{str_limit($post->decription, 50)}}</td>
-                    <td><a href="{{URL::to('/post/'.$post->id)}}" class="btn bg-info">Читать полностью</a></td>
-                </tr>.
+
+                    <td>
+                        <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
+
+                        {{ Form::open(['route' => ['delete.route', $post->id], 'method' => 'delete']) }}
+                        {!! Form::submit('Delete', ['class' => 'btn btn-danger'])!!}
+                        {{ Form::close() }}
+                    </td>
+                </tr>
                 @endforeach
             @endif
-
-
-
+            <a href="{{URL::to('/create/')}}" class="btn btn-danger">Create Ad</a>
         </tbody>
     </table>
             {{$posts->links()}}

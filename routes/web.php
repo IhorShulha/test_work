@@ -11,11 +11,16 @@
 |
 */
 
-//Route::get('/', 'PostsController@index');
-//Route::get('/create', 'PostsController@create');
 Route::resource('/', 'PostsController');
 Route::get('/post/{id}', 'PostsController@show');
+Route::get('/delete/{id}', 'PostsController@destroy');
+Route::get('/post/{id}/edit', 'PostsController@edit');
+Route::delete('delete/{id}', [
+    'uses' => 'PostsController@destroy',
+    'as' => 'delete.route'
+]);
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
