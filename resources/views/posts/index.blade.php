@@ -28,11 +28,12 @@
                         <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
 
 
-                            {{--@if(Auth::loginUsingId($id))--}}
+
                             {{ Form::open(['route' => ['delete.route', $post->id], 'method' => 'delete']) }}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger'])!!}
                             {{ Form::close() }}
-                            {{--@endif--}}
+                        
+
 
                         @endif
                     </td>
