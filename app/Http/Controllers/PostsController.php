@@ -51,7 +51,7 @@ class PostsController extends Controller
         $user->posts()->create($request->all());
 
 
-        return redirect()->route('post', ['post'=> $post->id]);
+        return redirect('/');
     }
 
     /**
