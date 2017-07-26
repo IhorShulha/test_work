@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostsCreateRequest;
+use App\Http\Requests\PostsUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
@@ -10,6 +11,11 @@ use App\User;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,11 +44,14 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostsCreateRequest $request)
+    public function store(PostsCreateRequest $request, Post $post)
     {
-        Post::create($request->all());
+        $user = Auth::user();
 
-        return redirect('/');
+        $user->posts()->create($request->all());
+
+
+        return redirect()->route('post', ['post'=> $post->id]);
     }
 
     /**
@@ -68,6 +77,7 @@ class PostsController extends Controller
     {
         $post = Post::findOrFail($id);
 
+
         return view('posts.edit', compact('post'));
     }
 
@@ -78,14 +88,17 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostsCreateRequest $request, $id)
+    public function update(PostsUpdateRequest $request, $id)
     {
 
         $post = Post::findOrFail($id);
-        $input = PostsCreateRequest::all();
-        $post->update($input);
 
-        return redirect('/post/'.$id);
+        $post->update(
+            $request->only('title', 'decription')
+        );
+
+
+        return redirect('/');
     }
 
     /**

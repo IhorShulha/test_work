@@ -15,6 +15,9 @@ Route::resource('/', 'PostsController');
 Route::get('/post/{id}', 'PostsController@show');
 Route::get('/delete/{id}', 'PostsController@destroy');
 Route::get('/post/{id}/edit', 'PostsController@edit');
+Route::put('/post/{id}', [
+    'uses' => 'PostsController@update',
+    'as' => 'posts.update']);
 Route::delete('delete/{id}', [
     'uses' => 'PostsController@destroy',
     'as' => 'delete.route'

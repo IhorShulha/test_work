@@ -18,7 +18,7 @@
         <tbody>
             @foreach($posts as $post)
                 <tr>
-                    <td>{{$post->user_id}}</td>
+                    <td>{{$post->user->name}}</td>
                     <td>{{$post->created_at ? $post->created_at->diffForHumans() : 'No date'}}</td>
                     <td><a href="{{URL::to('/post/'.$post->id)}}">{{$post->title}}</a></td>
                     <td>{{str_limit($post->decription, 50)}}</td>
@@ -28,7 +28,7 @@
                         <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
 
 
-                            {{--@if(Auth::loginUsingId())--}}
+                            {{--@if(Auth::loginUsingId($id))--}}
                             {{ Form::open(['route' => ['delete.route', $post->id], 'method' => 'delete']) }}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger'])!!}
                             {{ Form::close() }}

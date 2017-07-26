@@ -6,7 +6,7 @@
 
     <div class="col-sm-12">
         <div class="row">
-            {{ Form::model($post, ['method' => 'PUT', 'action' => ['PostsController@update', $post->id]]) }}
+            {!! Form::model($post,['method' => 'PUT', 'action' => ['PostsController@update', $post->id]]) !!}
             <div class="form-group">
                 {!! Form::label('title', 'Title:') !!}
                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
