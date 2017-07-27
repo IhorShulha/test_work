@@ -17,9 +17,8 @@
         Date created: {{$post->created_at}}</p>
 
     <p>{!! $post->decription !!}</p>
-    @if (Auth::user())
+    @if (Auth::check() && Auth::user()->id == $post->user_id)
     <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
-
     {{--@if(Auth::loginUsingId($id))--}}
     {{ Form::open(['route' => ['delete.route', $post->id], 'method' => 'delete']) }}
     {!! Form::submit('Delete', ['class' => 'btn btn-danger'])!!}

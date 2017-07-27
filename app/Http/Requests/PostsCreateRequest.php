@@ -25,7 +25,7 @@ class PostsCreateRequest extends FormRequest
     {
         return [
             //
-            'title' => 'required',
+            'title' => 'required|max:64',
             'decription' => 'required',
         ];
     }

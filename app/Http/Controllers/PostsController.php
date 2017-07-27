@@ -44,7 +44,7 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostsCreateRequest $request, Post $post)
+    public function store(PostsCreateRequest $request)
     {
         $user = Auth::user();
 
@@ -82,23 +82,20 @@ class PostsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PostsUpdateRequest $request
+     * @param Post $post
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(PostsUpdateRequest $request, $id)
+    public function update(PostsUpdateRequest $request, Post $post, $id)
     {
-
         $post = Post::findOrFail($id);
 
         $post->update(
             $request->only('title', 'decription')
         );
 
-
-        return redirect('/');
+        return redirect('/post/'.$post->id);
     }
 
     /**

@@ -24,17 +24,15 @@
                     <td>{{str_limit($post->decription, 50)}}</td>
 
                     <td>
-                        @if (Auth::user())
-                        <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
-
-
-
+                        @if (Auth::check() && Auth::user()->id == $post->user_id)
+                            <a href="{{URL::to('/post/'.$post->id.'/edit')}}" class="btn btn-info">Edit</a>
                             {{ Form::open(['route' => ['delete.route', $post->id], 'method' => 'delete']) }}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger'])!!}
                             {{ Form::close() }}
-                        
-
-
+                        @else
+                            <div class="text-danger">
+                                Don't permission
+                            </div>
                         @endif
                     </td>
                 </tr>
