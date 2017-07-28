@@ -73,12 +73,18 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post, $id)
     {
+        //$this->authorize('update', $post);
+
         $post = Post::findOrFail($id);
 
+        if(Auth::user()->id == $post->user_id) {
+            return view('posts.edit', compact('post'));
+        }
+        return "У вас недостаточно прав";
 
-        return view('posts.edit', compact('post'));
+        //return view('posts.edit', compact('post'));
     }
 
     /**
@@ -89,6 +95,7 @@ class PostsController extends Controller
      */
     public function update(PostsUpdateRequest $request, Post $post, $id)
     {
+
         $post = Post::findOrFail($id);
 
         $post->update(
@@ -109,6 +116,17 @@ class PostsController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return redirect('/');
+        if(Auth::user()->id == $post->user_id) {
+            return redirect('/');
+        }
+        return "У вас недостаточно прав";
+
+        //
+    }
+
+    public function updateOwnPost($user, $post, $permission) {
+        $post = $this->getModel(\App\Post::class, $post);
+
+        return $user->id === $post->user_id;
     }
 }
